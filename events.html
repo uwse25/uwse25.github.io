@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Site made with Mobirise Website Builder v4.12.3, https://mobirise.com -->
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Mobirise v4.12.3, mobirise.com">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  <link rel="shortcut icon" href="assets/images/se-2025-128x128.png" type="image/x-icon">
+  <meta name="description" content="Web Page Generator Description">
+  
+  
+  <title>Test</title>
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-grid.min.css">
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-reboot.min.css">
+  <link rel="stylesheet" href="assets/tether/tether.min.css">
+  <link rel="stylesheet" href="assets/theme/css/style.css">
+  <link rel="preload" as="style" href="assets/mobirise/css/mbr-additional.css"><link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css" type="text/css">
+  
+  
+  
+</head>
+<body>
+  <section class="services6 cid-s0pxKhJCO2" id="services6-7">
+    <!---->
+    
+    <!---->
+    <!--Overlay-->
+    
+    <!--Container-->
+    <div class="container">
+        <div class="row">
+            <!--Titles-->
+            <div class="title col-12">
+                <h2 class="align-left mbr-fonts-style m-0 display-1">
+                    Upcoming SE Events
+                </h2>
+                
+            </div>
+            <!--Cards-->
+            <div id="calen"></div>
+        </div>
+    </div>
+</section>
+
+
+  <section class="engine"><a href="https://mobirise.info/n">simple website templates</a></section><script src="assets/web/assets/jquery/jquery.min.js"></script>
+  <script src="assets/popper/popper.min.js"></script>
+  <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+  <script src="assets/tether/tether.min.js"></script>
+  <script src="assets/smoothscroll/smooth-scroll.js"></script>
+  <script src="assets/theme/js/script.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.5/firebase.js"></script>
+  <script>
+    var showMore = false;
+    var firebaseConfig = {
+      apiKey: "AIzaSyBnq8Es558f1kNNoFFvYQiMvyKECZVg3yY",
+        authDomain: "uwse25-site.firebaseapp.com",
+      databaseURL: "https://uwse25-site.firebaseio.com",
+      projectId: "uwse25-site",
+      storageBucket: "uwse25-site.appspot.com",
+      messagingSenderId: "1009669235398",
+      appId: "1:1009669235398:web:1805856bccabc7db956dc7"
+    };
+    firebase.initializeApp(firebaseConfig);
+    var x = "",i;
+    const db = firebase.firestore();
+    var time;
+    var date;
+    var dateString;
+    var name;
+    var desc;
+    var image;
+    var timestamp = firebase.firestore.Timestamp.fromDate(new Date());
+    const options = {year: 'numeric', month: 'long', day: 'numeric' };
+    var events = db.collection('Events').where('Time','>=',timestamp).orderBy('Time').limit(10).get().then((snapshot) => {
+      snapshot.docs.forEach(doc => {
+        time = doc.data().Time;
+        date = time.toDate();
+        dateString = date.toLocaleDateString(undefined,options);
+        name = doc.data().Name;
+        desc = doc.data().Desc;
+        image = doc.data().image;
+        x = x + "<div class=\"card col-12 pb-5\"><div class=\"card-wrapper media-container-row media-container-row\"><div class=\"card-box\"><div class=\"row\"><div class=\"col-12 col-md-2\"><div class=\"mbr-figure\"><img src=\"assets/images/"+image+"\" alt=\"No Image\"></div></div><div class=\"col-12 col-md-10\"><div class=\"wrapper\"><div class=\"top-line pb-3\"><h4 class=\"card-title mbr-fonts-style display-5\">"+name+"</h4><p class=\"mbr-text cost mbr-fonts-style m-0 display-5\">"+dateString+"</p></div><div class=\"bottom-line\"><p class=\"mbr-text mbr-fonts-style display-7\">"+desc+"</p></div></div></div></div></div></div></div>";
+        document.getElementById("calen").innerHTML = x;
+      })
+    })
+</script>
+  
+</body>
+</html>
