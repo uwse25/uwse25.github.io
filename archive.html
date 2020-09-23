@@ -7,10 +7,10 @@
   <meta name="generator" content="Mobirise v4.12.3, mobirise.com">
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
   <link rel="shortcut icon" href="assets/images/se-2025-128x128.png" type="image/x-icon">
-  <meta name="description" content="Landing page of our coomunity hackathon">
+  <meta name="description" content="SE'25 Event Archive">
   
   
-  <title>Hackathon</title>
+  <title>Archive</title>
   <link rel="stylesheet" href="assets/web/assets/mobirise-icons/mobirise-icons.css">
   <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-grid.min.css">
@@ -24,7 +24,7 @@
   
 </head>
 <body>
-  <section class="menu cid-s0u3DXXQe4" once="menu" id="menu2-d">
+  <section class="menu cid-sbqSqVqorJ" once="menu" id="menu2-i">
 
     
 
@@ -51,31 +51,34 @@
             <ul class="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true"><li class="nav-item">
                     <a class="nav-link link text-black display-4" href="events.html">Events</a>
                 </li><li class="nav-item"><a class="nav-link link text-black display-4" href="socials.html">
-                        Socials</a></li><li class="nav-item"><a class="nav-link link text-black display-4" href="archive.html">Archive</a></li></ul>     
+                        Socials</a></li><li class="nav-item"><a class="nav-link link text-black display-4" href="archive.html">Archive</a></li></ul>
+            
         </div>
     </nav>
 </section>
 
-<section class="engine"><a href="https://mobirise.info/a">online site builder</a></section><section class="header1 cid-s2PeRFC7Sn mbr-fullscreen" id="header16-f">
-
+<section class="engine"><a href="https://mobirise.info/m">free website design templates</a></section><section class="services6 cid-sbqSqU3nva" id="services6-g">
+    <!---->
     
-
+    <!---->
+    <!--Overlay-->
     
-
+    <!--Container-->
     <div class="container">
-        <div class="row justify-content-md-center">
-            <div class="col-md-10 align-center">
-                <h1 class="mbr-section-title mbr-bold pb-3 mbr-fonts-style display-1" id = "theme">
-                    Theme: </h1>
-                
-                <p class="mbr-text pb-3 mbr-fonts-style display-5"><em>
-                    Submission Requirements</em><br>Upon completing your project, you must send me an email to bohdanhrotovytskyy@gmail.com with instructions on how to run your program as well as a link to a file or YouTube video which is a demo of your project. The timestamp on the email must show that it is before the deadline to be considered.</p>
+        <div class="row">
+            <!--Titles-->
+            <div class="title col-12">
+                <h2 class="align-left mbr-fonts-style m-0 display-1">
+                    Event Archive
+                </h2>
                 
             </div>
+            <!--Cards-->
+            <div id="calen"></div>
         </div>
     </div>
-
 </section>
+
 
 
   <script src="assets/web/assets/jquery/jquery.min.js"></script>
@@ -100,13 +103,27 @@
       appId: "1:1009669235398:web:1805856bccabc7db956dc7"
     };
     firebase.initializeApp(firebaseConfig);
+    var x = "",i;
     const db = firebase.firestore();
-    var theme = "";
-    var events = db.collection('Hack').get().then((snapshot) => {
+    var time;
+    var date;
+    var dateString;
+    var name;
+    var desc;
+    var image;
+    var timestamp = firebase.firestore.Timestamp.fromDate(new Date());
+    const options = {year: 'numeric', month: 'long', day: 'numeric' };
+    var events = db.collection('Events').where('Time','<',timestamp).orderBy('Time','desc').get().then((snapshot) => {
       snapshot.docs.forEach(doc => {
-        theme = doc.data().Theme;
+        time = doc.data().Time;
+        date = time.toDate();
+        dateString = date.toLocaleDateString(undefined,options);
+        name = doc.data().Name;
+        desc = doc.data().Desc;
+        image = doc.data().image;
+        x = x + "<div class=\"card col-12 pb-5\"><div class=\"card-wrapper media-container-row media-container-row\"><div class=\"card-box\"><div class=\"row\"><div class=\"col-12 col-md-2\"><div class=\"mbr-figure\"><img src=\"assets/images/"+image+"\" alt=\"No Image\"></div></div><div class=\"col-12 col-md-10\"><div class=\"wrapper\"><div class=\"top-line pb-3\"><h4 class=\"card-title mbr-fonts-style display-5\">"+name+"</h4><p class=\"mbr-text cost mbr-fonts-style m-0 display-5\">"+dateString+"</p></div><div class=\"bottom-line\"><p class=\"mbr-text mbr-fonts-style display-7\">"+desc+"</p></div></div></div></div></div></div></div>";
       })
-      document.getElementById("theme").innerHTML += theme + "&nbsp;";
+      document.getElementById("calen").innerHTML = x;
     })
 </script>
   
